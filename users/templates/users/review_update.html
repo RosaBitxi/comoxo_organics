@@ -1,0 +1,61 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<section class="ftco-section">
+	<div class="container">
+	<div class="row ftco-animate">
+	<h2 class="mb-3">Hey {{ user.full_name | truncatewords:1 }} How was your stay at
+		{% if user.location == 0 %} Comoxo and Conga? {% endif %}
+		{% if user.location == 1 %} Comoxo? {% endif %}
+		{% if user.location == 2 %} Conga House? {% endif %}    
+	</h2>
+	{% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+    <div class="col-lg-8 order-lg-last ftco-animate">
+	<form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for last_review in last_review.all %}
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label for="id_details">Title</label> 
+					<input type="text" name="title" class="form-control" required value="{{ last_review.title }}"/>
+				</div>
+            </div>
+			<div class="col-md-12">
+				<div id="id_details" class="form-group">
+					<label>Your Review</label> 
+					<textarea name="content" cols="40" rows="5" class="textarea form-control" required>{{ last_review.content }}</textarea> 
+				</div>
+            </div>
+			<div class="col-md-6 col-xs-12">
+				<div class="form-group">
+					<label>Upload a photo</label> 
+					<input type="file" name="pic" class="form-control"/>
+                    <small>( file name: {{ last_review.pic }} )</small>
+				</div>
+			</div>
+			<div class="col-md-6 col-xs-12">
+				<div class="form-group">
+				<label>Rate Your Stay</label>
+				<select class="dateinput form-control" name="rating" required>
+					<option value="5" selected >⭐⭐⭐⭐⭐</option>
+					<option value="4" >⭐⭐⭐⭐</option>
+					<option value="3" >⭐⭐⭐</option>
+					<option value="2" >⭐⭐</option>
+					<option value="1" >⭐</option>
+					</select>
+				</div>
+			</div>
+            {% endfor %}
+            <div class="col-md-12">
+			    <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+            </div>
+
+        </div>
+	</form>
+     
+	</div>
+	</div>
+	</div>
+</section>
+{% endblock content %}

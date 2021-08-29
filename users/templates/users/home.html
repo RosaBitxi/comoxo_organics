@@ -1,0 +1,42 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<section class="ftco-section">
+	<div class="container">
+	<div class="row ftco-animate">
+
+		<div class="col-lg-9 order-lg-last ftco-animate">
+			<h2 class="mb-3">Hey {{ user.full_name | truncatewords:1 }} Your request is still pending!</h2>
+			<p>In the mean time, if you wish to make changes or add additional details, update the form below.
+			</p>
+			{% if error %}
+			<div class="alert alert-danger" role="alert">{{ error }}</div>
+			{% endif %}
+			{% if success %}
+			<div class="alert alert-success" role="alert">{{ success }}</div>
+			{% endif %}
+			<form method="post" class="contact-form">
+				{% csrf_token %}
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-xs-12">
+						<div id="id_start_date" class="form-group">
+							<label for="id_start_date">Start Date<span class="asteriskField">*</span></label> 
+							<input type="date" name="start_date" value="{{user.start_date|date:"Y-m-d"}}" class="form-control" required />
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-xs-12">
+						<div id="id_start_date" class="form-group">
+							<label for="id_end_date">End Date<span class="asteriskField">*</span></label> 
+							<input type="date" name="end_date" value="{{user.end_date|date:"Y-m-d"}}" class="form-control" required />
+						</div>
+					</div>
+				</div>
+				<div id="id_details" class="form-group">
+					<label for="id_details">Details of Your Visit <span class="asteriskField">*</span></label> 
+					<textarea name="details" cols="40" rows="5" class="textarea form-control" required id="id_details">{{ user.details }}</textarea> 
+				</div>
+				<button type="submit" class="btn btn-lg btn-primary">Save Changes</button>
+			</form>
+		</div>
+	</div>
+</section>
+{% endblock content %}

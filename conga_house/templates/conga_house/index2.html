@@ -1,0 +1,523 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Comoxo Organics | Conga House</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900" rel="stylesheet">
+      <script src="https://kit.fontawesome.com/923da19769.js" crossorigin="anonymous"></script>
+      <style>
+         button.owl-prev:after {
+         content: '←'!important;
+         color: white!important;
+         font-size: 120%!important;
+         font-weight: 900!important;
+         }
+         button.owl-next:after {
+         content: '→'!important;
+         color: white!important;
+         font-size: 120%!important;
+         font-weight: 900!important;
+         }
+      </style>
+      <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+      <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+      <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+         <div class="container">
+            <a class="navbar-brand" href="{% url 'comoxo_farm:comoxo' %}"><span>Comoxo</span></a>
+            <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i> Menu
+            </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+               <ul class="navbar-nav nav ml-auto">
+                  <li class="nav-item"><a href="#" class="nav-link" data-nav-section="home"><span>Home</span></a></li>
+                  <li class="nav-item"><a href="#" class="nav-link" data-nav-section="family"><span>Rooms</span></a></li>
+                  <li class="nav-item cta"><a href="#" class="nav-link" data-nav-section="contact">Request to Stay</a></li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      {% for header in header.all %}
+      <section class="hero-wrap js-fullheight" style="background-image: url('{{ header.field_img.url }}');" data-section="home">
+         <div class="overlay"></div>
+         <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+               <div class="col-md-8 ftco-animate mt-5" data-scrollax=" properties: { translateY: '70%' }">
+                  <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">{{ header.field_title }}</h1>
+                  <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+                     {{ header.field_content }}
+                  </p>
+               </div>
+            </div>
+         </div>
+      </section>
+      {% endfor %}
+      <a name="family" />
+         <section class="ftco-section" data-section="family">
+            <div class="container-fluid p-0">
+               <div class="row no-gutters justify-content-center pb-5">
+                  <div class="col-md-12 heading-section text-center ftco-animate">
+                     <span class="subheading">AVAILABLE ROOMS</span>
+                     <h2 class="mb-4">In La Conga House</h2>
+                  </div>
+               </div>
+               <div class="row no-gutters">
+                  {% for conga_room in conga_room.all %}
+                  <div class="col-md-12 col-lg-6 ftco-animate">
+                     <div class="staff">
+                        <div class="img-wrap d-flex align-items-stretch">
+                           <div class="img align-self-stretch" style="background-image: url('{{ conga_room.pic.url }}');"></div>
+                        </div>
+                        <div class="text d-flex align-items-center pt-3 text-center">
+                           <div>
+                              <span class="position mb-2">{{ conga_room.name }}</span>
+                              <h3 class="mb-4">{{ conga_room.floor }}</h3>
+                              <div class="faded">
+                                 <p>{{ conga_room.floor }}</p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  {% endfor %}
+               </div>
+         </section>
+         <section class="testimony-section pb-5" data-section="testimony">
+         <div class="pb-5"></div>
+         <div class="pb-5"></div>
+         <div class="container">
+         <div class="row ftco-animate justify-content-center">
+         <div class="col-md-12 heading-section text-center ftco-animate">
+         <h2 class="mb-5">What Our Tenants Say</h2>
+         </div>
+         <div class="col-md-12 d-flex align-items-center">
+         <div class="carousel-testimony owl-carousel">
+         {% for reviews in reviews.all %}
+         <div class="item">
+         <div class="testimony-wrap d-flex align-items-stretch">
+         <div class="user-img d-flex align-self-stretch" style="background-image: url('{{reviews.pic.url}}')"></div>
+         <div class="text d-flex align-items-center">
+         <div>
+         <div class="icon-quote">
+         <span class="icon-quote-left"><i class="fas fa-quote-left"></i></span>
+         </div>
+         <p class="mb-4">{{ reviews.content }}</p>
+         <p class="name">{{ reviews.author.full_name }} from {{ reviews.author.country.name }}</p>
+         <span class="position">Visited us last {{ reviews.author.start_date | date:"d M Y" }}</span>
+         </div>
+         </div>
+         </div>
+         </div>
+         {% endfor %}
+         </div>
+         </div>
+         </div>
+         <div class="pb-5"></div>
+         </section>
+         <section class="ftco-section ftco-project bg-light" data-section="contact">
+         <div class="pb-5"></div>
+         <div class="pb-5"></div>
+         <div class="container-form">
+         <div class="row services-section">
+         <div class="col-md-12 heading-section text-center ftco-animate pb-5">
+         <span class="subheading">Request to Stay</span>
+         <h2 class="mb-4">Sign Up with Comoxo Organics!</h2>
+         <p>We will contact you as soon as possible for any availabilities</p>
+         {% if error %}
+         <div class="alert alert-danger" role="alert">
+         {{ error }}
+         </div>
+         {% endif %}
+         {% if success %}
+         <div class="alert alert-success" role="alert">
+         {{ success }}
+         </div>
+         {% endif %}
+         <form method="POST" class="contact-form">
+         {% csrf_token %}
+         </div>
+         <div class="col-lg-6 col-md-6 col-xs-12">
+         <div id="div_id_email" class="form-group">
+         <label>Username (Email Address) </label> 
+         <input type="email" name="email" placeholder="you@example.com" maxlength="254" autofocus class="emailinput form-control" required id="id_email" required />
+         </div>
+         </div>
+         <div class="col-lg-6 col-md-6 col-xs-12">
+         <div id="div_id_full_name" class="form-group">
+         <label for="id_full_name" >Full Name </label> 
+         <input type="text" name="full_name" maxlength="200" class="textinput textInput form-control" required id="id_full_name">
+         </div>
+         </div>
+         <div class="col-lg-6 col-md-6 col-xs-12">
+         <div id="div_id_password1" class="form-group">
+         <label for="id_password1" >Password </label> 
+         <input type="password" name="password1" autocomplete="new-password" class="textinput textInput form-control" required id="id_password1"> 
+         <small id="hint_id_password1" class="form-text text-muted">
+         <ul>
+         <li>Your password can’t be too similar to your other personal information.</li>
+         <li>Your password must contain at least 8 characters.</li>
+         <li>Your password can’t be a commonly used password.</li>
+         <li>Your password can’t be entirely numeric.</li>
+         </ul>
+         </small>
+         </div>
+         </div>
+         <div class="col-lg-6 col-md-6 col-xs-12">
+         <div id="div_id_password2" class="form-group">
+         <label for="id_password2" >Password confirmation </label> 
+         <input type="password" name="password2" autocomplete="new-password" class="textinput textInput form-control" required id="id_password2"> <small id="hint_id_password2" class="form-text text-muted">Enter the same password as before, for verification.</small>
+         </div>
+         </div>
+         <div class="col-lg-6 col-md-6 col-xs-12">
+         <div id="div_id_country" class="form-group">
+         <label for="id_country" >Country </label> 
+         <select name="country" class="lazyselect form-control" required id="id_country" >
+         <option value="" selected>---------</option>
+         <option value="AF">Afghanistan</option>
+         <option value="AX">Åland Islands</option>
+         <option value="AL">Albania</option>
+         <option value="DZ">Algeria</option>
+         <option value="AS">American Samoa</option>
+         <option value="AD">Andorra</option>
+         <option value="AO">Angola</option>
+         <option value="AI">Anguilla</option>
+         <option value="AQ">Antarctica</option>
+         <option value="AG">Antigua and Barbuda</option>
+         <option value="AR">Argentina</option>
+         <option value="AM">Armenia</option>
+         <option value="AW">Aruba</option>
+         <option value="AU">Australia</option>
+         <option value="AT">Austria</option>
+         <option value="AZ">Azerbaijan</option>
+         <option value="BS">Bahamas</option>
+         <option value="BH">Bahrain</option>
+         <option value="BD">Bangladesh</option>
+         <option value="BB">Barbados</option>
+         <option value="BY">Belarus</option>
+         <option value="BE">Belgium</option>
+         <option value="BZ">Belize</option>
+         <option value="BJ">Benin</option>
+         <option value="BM">Bermuda</option>
+         <option value="BT">Bhutan</option>
+         <option value="BO">Bolivia</option>
+         <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+         <option value="BA">Bosnia and Herzegovina</option>
+         <option value="BW">Botswana</option>
+         <option value="BV">Bouvet Island</option>
+         <option value="BR">Brazil</option>
+         <option value="IO">British Indian Ocean Territory</option>
+         <option value="BN">Brunei</option>
+         <option value="BG">Bulgaria</option>
+         <option value="BF">Burkina Faso</option>
+         <option value="BI">Burundi</option>
+         <option value="CV">Cabo Verde</option>
+         <option value="KH">Cambodia</option>
+         <option value="CM">Cameroon</option>
+         <option value="CA">Canada</option>
+         <option value="KY">Cayman Islands</option>
+         <option value="CF">Central African Republic</option>
+         <option value="TD">Chad</option>
+         <option value="CL">Chile</option>
+         <option value="CN">China</option>
+         <option value="CX">Christmas Island</option>
+         <option value="CC">Cocos (Keeling) Islands</option>
+         <option value="CO">Colombia</option>
+         <option value="KM">Comoros</option>
+         <option value="CG">Congo</option>
+         <option value="CD">Congo (the Democratic Republic of the)</option>
+         <option value="CK">Cook Islands</option>
+         <option value="CR">Costa Rica</option>
+         <option value="CI">Côte d&#x27;Ivoire</option>
+         <option value="HR">Croatia</option>
+         <option value="CU">Cuba</option>
+         <option value="CW">Curaçao</option>
+         <option value="CY">Cyprus</option>
+         <option value="CZ">Czechia</option>
+         <option value="DK">Denmark</option>
+         <option value="DJ">Djibouti</option>
+         <option value="DM">Dominica</option>
+         <option value="DO">Dominican Republic</option>
+         <option value="EC">Ecuador</option>
+         <option value="EG">Egypt</option>
+         <option value="SV">El Salvador</option>
+         <option value="GQ">Equatorial Guinea</option>
+         <option value="ER">Eritrea</option>
+         <option value="EE">Estonia</option>
+         <option value="SZ">Eswatini</option>
+         <option value="ET">Ethiopia</option>
+         <option value="FK">Falkland Islands (Malvinas)</option>
+         <option value="FO">Faroe Islands</option>
+         <option value="FJ">Fiji</option>
+         <option value="FI">Finland</option>
+         <option value="FR">France</option>
+         <option value="GF">French Guiana</option>
+         <option value="PF">French Polynesia</option>
+         <option value="TF">French Southern Territories</option>
+         <option value="GA">Gabon</option>
+         <option value="GM">Gambia</option>
+         <option value="GE">Georgia</option>
+         <option value="DE">Germany</option>
+         <option value="GH">Ghana</option>
+         <option value="GI">Gibraltar</option>
+         <option value="GR">Greece</option>
+         <option value="GL">Greenland</option>
+         <option value="GD">Grenada</option>
+         <option value="GP">Guadeloupe</option>
+         <option value="GU">Guam</option>
+         <option value="GT">Guatemala</option>
+         <option value="GG">Guernsey</option>
+         <option value="GN">Guinea</option>
+         <option value="GW">Guinea-Bissau</option>
+         <option value="GY">Guyana</option>
+         <option value="HT">Haiti</option>
+         <option value="HM">Heard Island and McDonald Islands</option>
+         <option value="VA">Holy See</option>
+         <option value="HN">Honduras</option>
+         <option value="HK">Hong Kong</option>
+         <option value="HU">Hungary</option>
+         <option value="IS">Iceland</option>
+         <option value="IN">India</option>
+         <option value="ID">Indonesia</option>
+         <option value="IR">Iran</option>
+         <option value="IQ">Iraq</option>
+         <option value="IE">Ireland</option>
+         <option value="IM">Isle of Man</option>
+         <option value="IL">Israel</option>
+         <option value="IT">Italy</option>
+         <option value="JM">Jamaica</option>
+         <option value="JP">Japan</option>
+         <option value="JE">Jersey</option>
+         <option value="JO">Jordan</option>
+         <option value="KZ">Kazakhstan</option>
+         <option value="KE">Kenya</option>
+         <option value="KI">Kiribati</option>
+         <option value="KW">Kuwait</option>
+         <option value="KG">Kyrgyzstan</option>
+         <option value="LA">Laos</option>
+         <option value="LV">Latvia</option>
+         <option value="LB">Lebanon</option>
+         <option value="LS">Lesotho</option>
+         <option value="LR">Liberia</option>
+         <option value="LY">Libya</option>
+         <option value="LI">Liechtenstein</option>
+         <option value="LT">Lithuania</option>
+         <option value="LU">Luxembourg</option>
+         <option value="MO">Macao</option>
+         <option value="MG">Madagascar</option>
+         <option value="MW">Malawi</option>
+         <option value="MY">Malaysia</option>
+         <option value="MV">Maldives</option>
+         <option value="ML">Mali</option>
+         <option value="MT">Malta</option>
+         <option value="MH">Marshall Islands</option>
+         <option value="MQ">Martinique</option>
+         <option value="MR">Mauritania</option>
+         <option value="MU">Mauritius</option>
+         <option value="YT">Mayotte</option>
+         <option value="MX">Mexico</option>
+         <option value="FM">Micronesia (Federated States of)</option>
+         <option value="MD">Moldova</option>
+         <option value="MC">Monaco</option>
+         <option value="MN">Mongolia</option>
+         <option value="ME">Montenegro</option>
+         <option value="MS">Montserrat</option>
+         <option value="MA">Morocco</option>
+         <option value="MZ">Mozambique</option>
+         <option value="MM">Myanmar</option>
+         <option value="NA">Namibia</option>
+         <option value="NR">Nauru</option>
+         <option value="NP">Nepal</option>
+         <option value="NL">Netherlands</option>
+         <option value="NC">New Caledonia</option>
+         <option value="NZ">New Zealand</option>
+         <option value="NI">Nicaragua</option>
+         <option value="NE">Niger</option>
+         <option value="NG">Nigeria</option>
+         <option value="NU">Niue</option>
+         <option value="NF">Norfolk Island</option>
+         <option value="KP">North Korea</option>
+         <option value="MK">North Macedonia</option>
+         <option value="MP">Northern Mariana Islands</option>
+         <option value="NO">Norway</option>
+         <option value="OM">Oman</option>
+         <option value="PK">Pakistan</option>
+         <option value="PW">Palau</option>
+         <option value="PS">Palestine, State of</option>
+         <option value="PA">Panama</option>
+         <option value="PG">Papua New Guinea</option>
+         <option value="PY">Paraguay</option>
+         <option value="PE">Peru</option>
+         <option value="PH">Philippines</option>
+         <option value="PN">Pitcairn</option>
+         <option value="PL">Poland</option>
+         <option value="PT">Portugal</option>
+         <option value="PR">Puerto Rico</option>
+         <option value="QA">Qatar</option>
+         <option value="RE">Réunion</option>
+         <option value="RO">Romania</option>
+         <option value="RU">Russia</option>
+         <option value="RW">Rwanda</option>
+         <option value="BL">Saint Barthélemy</option>
+         <option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
+         <option value="KN">Saint Kitts and Nevis</option>
+         <option value="LC">Saint Lucia</option>
+         <option value="MF">Saint Martin (French part)</option>
+         <option value="PM">Saint Pierre and Miquelon</option>
+         <option value="VC">Saint Vincent and the Grenadines</option>
+         <option value="WS">Samoa</option>
+         <option value="SM">San Marino</option>
+         <option value="ST">Sao Tome and Principe</option>
+         <option value="SA">Saudi Arabia</option>
+         <option value="SN">Senegal</option>
+         <option value="RS">Serbia</option>
+         <option value="SC">Seychelles</option>
+         <option value="SL">Sierra Leone</option>
+         <option value="SG">Singapore</option>
+         <option value="SX">Sint Maarten (Dutch part)</option>
+         <option value="SK">Slovakia</option>
+         <option value="SI">Slovenia</option>
+         <option value="SB">Solomon Islands</option>
+         <option value="SO">Somalia</option>
+         <option value="ZA">South Africa</option>
+         <option value="GS">South Georgia and the South Sandwich Islands</option>
+         <option value="KR">South Korea</option>
+         <option value="SS">South Sudan</option>
+         <option value="ES">Spain</option>
+         <option value="LK">Sri Lanka</option>
+         <option value="SD">Sudan</option>
+         <option value="SR">Suriname</option>
+         <option value="SJ">Svalbard and Jan Mayen</option>
+         <option value="SE">Sweden</option>
+         <option value="CH">Switzerland</option>
+         <option value="SY">Syria</option>
+         <option value="TW">Taiwan</option>
+         <option value="TJ">Tajikistan</option>
+         <option value="TZ">Tanzania</option>
+         <option value="TH">Thailand</option>
+         <option value="TL">Timor-Leste</option>
+         <option value="TG">Togo</option>
+         <option value="TK">Tokelau</option>
+         <option value="TO">Tonga</option>
+         <option value="TT">Trinidad and Tobago</option>
+         <option value="TN">Tunisia</option>
+         <option value="TR">Turkey</option>
+         <option value="TM">Turkmenistan</option>
+         <option value="TC">Turks and Caicos Islands</option>
+         <option value="TV">Tuvalu</option>
+         <option value="UG">Uganda</option>
+         <option value="UA">Ukraine</option>
+         <option value="AE">United Arab Emirates</option>
+         <option value="GB">United Kingdom</option>
+         <option value="UM">United States Minor Outlying Islands</option>
+         <option value="US">United States of America</option>
+         <option value="UY">Uruguay</option>
+         <option value="UZ">Uzbekistan</option>
+         <option value="VU">Vanuatu</option>
+         <option value="VE">Venezuela</option>
+         <option value="VN">Vietnam</option>
+         <option value="VG">Virgin Islands (British)</option>
+         <option value="VI">Virgin Islands (U.S.)</option>
+         <option value="WF">Wallis and Futuna</option>
+         <option value="EH">Western Sahara</option>
+         <option value="YE">Yemen</option>
+         <option value="ZM">Zambia</option>
+         <option value="ZW">Zimbabwe</option>
+         </select>
+         </div>
+         </div>
+         <div class="col-lg-6 col-md-6 col-xs-12">      
+         <div id="div_id_birthdate" class="form-group">
+         <label for="id_birthdate" class="">Birthdate*</label> 
+         <input type="date" name="birthdate" class="dateinput form-control" id="id_birthdate" required />
+         </div>
+         </div>
+         <div class="col-lg-6 col-md-6 col-xs-12">   
+         <div id="div_id_start_date" class="form-group">
+         <label for="id_start_date" >Start Date (Tentative) </label> 
+         <input type="date" name="start_date" value="2021-08-27" class="dateinput form-control" required id="id_start_date" />
+         </div>
+         </div>
+         <div class="col-lg-6 col-md-6 col-xs-12">   
+         <div id="div_id_end_date" class="form-group">
+         <label for="id_end_date" >End Date (Tentative) </label> 
+         <input type="date" name="end_date" value="2021-09-10" class="dateinput form-control" required id="id_end_date">
+         </div>
+         </div>
+         <div class="col-lg-12">
+         <div id="div_id_details" class="form-group">
+         <label for="id_details" >
+         How are you planning to move?</label> 
+         <textarea name="details" cols="40" rows="3" class="textarea form-control" required id="id_details"></textarea> 
+         </div>
+         <button type="submit" class="btn btn-lg btn-primary">Submit Request</button>
+         </form>
+         </div>
+         </div>
+         </div>
+         </div>
+         </div>
+         </section>
+         <footer class="ftco-footer ftco-section">
+            <div class="container">
+               <div class="row mb-5">
+                  <div class="col-md-8">
+                     {% for footer in footer.all %}
+                     <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">{{ footer.field_title }}</h2>
+                        <p>{{ footer.field_content }}</p>
+                        {% endfor %}
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                           <li class="ftco-animate">
+      <a href="https://instagram.com/comoxoorganics"><span class="icon-instagram"><i class="fab fa-instagram"></i></span></a></li>
+      </ul>
+      </div>
+      </div>
+      <div class="col-md-4">
+      <div class="ftco-footer-widget mb-4 ml-md-4">
+      <h2 class="ftco-heading-2">Links</h2>
+      <ul class="list-unstyled">
+      <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Comoxo Organics</a></li>
+      <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>La Conga House</a></li>
+      </ul>
+      </div>
+      </div>
+      </div>
+      </div>
+      <div class="row">
+      <div class="col-md-12 text-center">
+      Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Comoxo Organics</p>
+      </div>
+      </div>
+      </div>
+      </footer>
+      <!-- loader -->
+      <div id="ftco-loader" class="show fullscreen">
+         <svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/>
+         </svg>
+      </div>
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+      <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+      <script src="{% static 'js/popper.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+      <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+      <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+      <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+      <script src="{% static 'js/aos.js' %}"></script>
+      <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+      <script src="{% static 'js/scrollax.min.js' %}"></script>
+      <script src="{% static 'js/main.js' %}"></script>
+   </body>
+</html>
